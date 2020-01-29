@@ -1,7 +1,7 @@
 ---
 title: "Lab for 7.8.1"
 author: "Zhongyi"
-date: "1/29/2020"
+
 output: html_document
 ---
 
