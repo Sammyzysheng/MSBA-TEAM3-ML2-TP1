@@ -1,1 +1,1 @@
-# WM-MSBA-TEAM3-ML2-TP1
+This repository is for Machine learning 2 Team 3 presentation 1.
