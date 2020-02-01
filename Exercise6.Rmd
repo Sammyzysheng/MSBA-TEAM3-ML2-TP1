@@ -16,6 +16,7 @@ the results of hypothesis testing using ANOVA? Make a plot of the resulting poly
 ```{r}
 library(ISLR)
 library(boot)
+head(Wage)
 set.seed(1)
 degree <- 10
 cv.errs <- rep(NA, degree)
