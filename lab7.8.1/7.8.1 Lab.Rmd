@@ -51,6 +51,8 @@ preds2=predict(fit2,newdata=list(age=age.grid),se=TRUE)
 max(abs(preds$fit-preds2$fit))
 ```
 
+##Choosing a "Best" Model
+
 First, we must decide what degree polynomial to use. Hypothesis testing is one way to do this. We use the anova() function to compare the five models and test for the following hypotheses:
 
 Null: The initial, simple model (M1) is sufficient to explain the model Alternative: A more complex model (M2) is required
