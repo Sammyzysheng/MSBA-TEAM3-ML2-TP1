@@ -13,41 +13,83 @@ In this exercise, you will further analyze the *Wage* data set considered throug
 Perform polynomial regression to predict wage using age . Use cross-validation to select the optimal degree d for the polynomial. What degree was chosen, and how does this compare to
 the results of hypothesis testing using ANOVA? Make a plot of the resulting polynomial fit to the data.
 
+Load libraries and view the data. 
+
 ```{r}
 library(ISLR)
 library(boot)
 head(Wage)
+```
+
+Plot the data to see what it looks like:
+
+```{r}
+with(Wage, plot(age, wage))
+```
+
+Perform a polynomial regression with a degree of 1 to 10, for each model, and calculate the average mean-squared error that you obtain from doing K-fold CV, here I set K=10 to increase computaional feasibility.
+
+```{r}
+
 set.seed(1)
 degree <- 10
 cv.errs <- rep(NA, degree)
 for (i in 1:degree) {
   fit <- glm(wage ~ poly(age, i), data = Wage)
-  cv.errs[i] <- cv.glm(Wage, fit, K=10)$delta[1]
+  cv.errs[i] <- cv.glm(Wage, fit,K=10)$delta[1]
 }
 ```
 Plot the test MSE by the degrees:
+
 ```{r}
-plot(1:degree, cv.errs, xlab = 'Degree', ylab = 'Test MSE', type = 'l')
+plot(1:degree, cv.errs, xlab = 'Degree', ylab = 'CV estimate of the prediction error', type = 'l')
 deg.min <- which.min(cv.errs)
 points(deg.min, cv.errs[deg.min], col = 'red', cex = 2, pch = 19)
 ```
 
-The minimum of test MSE at the degree 9. But test MSE of degree 4 is small enough.
+The minimum of CV MSE at the degree 9. But test MSE of degree 4 is small enough.
 The comparison by ANOVA (`anova(fit.1,fit.2,fit.3,fit.4,fit.5)`, on page 290, section 7.8.1) suggests degree 4 is enough.
 
-Predict with 3 degree model:
+```{r}
+fit.1 <- lm(wage ~ age, data = Wage)
+fit.2 <- lm(wage ~ poly(age, 2), data = Wage)
+fit.3 <- lm(wage ~ poly(age, 3), data = Wage)
+fit.4 <- lm(wage ~ poly(age, 4), data = Wage)
+fit.5 <- lm(wage ~ poly(age, 5), data = Wage)
+anova(fit.1, fit.2, fit.3, fit.4, fit.5)
+
+```
+
+Predict with 4 and 8 degree model:
+
 ```{r}
 plot(wage ~ age, data = Wage, col = "darkgrey")
 age.range <- range(Wage$age)
 age.grid <- seq(from = age.range[1], to = age.range[2])
-fit <- lm(wage ~ poly(age, 3), data = Wage)
-preds <- predict(fit, newdata = list(age = age.grid))
-lines(age.grid, preds, col = "red", lwd = 2)
+fit1 <- lm(wage ~ poly(age, 4), data = Wage)
+preds1 <- predict(fit1, newdata = list(age = age.grid))
+fit2 <- lm(wage ~ poly(age,8), data = Wage)
+preds2 <- predict(fit2, newdata = list(age = age.grid))
+lines(age.grid, preds1, col = "red", lwd = 2)
+lines(age.grid, preds2, col = "blue", lwd = 2)
 ```
 
 ## (b)
 
 Fit a step function to predict wage using age , and perform cross-validation to choose the optimal number of cuts. Make a plot of the fit obtained.
+
+Understand the `cut()` function:
+```{r}
+res <- cut(c(1,5,2,3,8), 2)
+res
+length(res)
+class(res[1])
+```
+
+`cut(x, k)` acts like *bin* or *binage*, turning a continuous quantitative variable into a discrete qualitative variable, by deviding the range of `x` evenly into `k` intervals.
+Each interval is called a *level*.
+The output of `cut(x, k)` is a vector with the same length of `x`.
+Each element of output (a *factor* object) is a *level* where the corresponding input element falls in.
 
 ```{r}
 cv.errs <- rep(NA, degree)
@@ -71,15 +113,4 @@ preds <- predict(fit, data.frame(age = age.grid))  # both `data.frame` and `list
 lines(age.grid, preds, col = "red", lwd = 2)
 ```
 
-Understand the `cut()` function:
-```{r}
-res <- cut(c(1,5,2,3,8), 2)
-res
-length(res)
-class(res[1])
-```
 
-`cut(x, k)` acts like *bin* or *binage*, turning a continuous quantitative variable into a discrete qualitative variable, by deviding the range of `x` evenly into `k` intervals.
-Each interval is called a *level*.
-The output of `cut(x, k)` is a vector with the same length of `x`.
-Each element of output (a *factor* object) is a *level* where the corresponding input element falls in.
