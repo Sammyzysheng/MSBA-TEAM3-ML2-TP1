@@ -86,33 +86,60 @@ fit.3=lm(wage~education+poly(age,3),data=Wage)
 anova(fit.1,fit.2,fit.3)
 ```
 
+# Polynomial Logistic Regression
+
+In this instance the topic of interest is whether or not the polynomials of age can predict whether an individual earns more than $250,000 per year.
+
+We fit a logistic regression model to a binary response variable utilzing the 'Wrapper (I)' function below. This expression (I(wage>250)) evaluates to a logical variable containing TRUEs and FALSEs, which glm() coerces into binary by setting the TRUEs to 1 and FALSEs to 0. 
+
 ```{R}
 fit=glm(I(wage>250)~poly(age,4),data=Wage,family=binomial)
+summary(fit)
 ```
+
+Utilize the predict function to make predictions of the polynomial logistic regression model. The default prediction type for a glm() model is type="link", which means we calculate predictions for the logit (log-odds) rather than probabilities.
 
 ```{R}
 preds=predict(fit,newdata=list(age=age.grid),se=T)
 ```
 
-```{R}
-pfit=exp(preds$fit)/(1+exp(preds$fit))
-se.bands.logit = cbind(preds$fit+2*preds$se.fit, preds$fit-2*preds$se.fit)
-se.bands = exp(se.bands.logit)/(1+exp(se.bands.logit))
-```
+Calculating confience intervals and standard error bands. Since the computations are logit we will need to apply inverse logit mapping.
 
 ```{R}
-preds=predict(fit,newdata=list(age=age.grid),type="response",se=T)
+pfit = exp(preds$fit) / (1+exp(preds$fit))
+se.bands.logit = cbind(lower=preds$fit-2*preds$se.fit,upper=preds$fit+2*preds$se.fit)
+se.bands = exp(se.bands.logit)/(1+exp(se.bands.logit))
+tail(se.bands)
 ```
+
+This is an example of a type="response" prediction should be set up, however, it is yielding negative probabilities and should not be used!
+
+```{R}
+pred.p=predict(fit,newdata=list(age=age.grid),type="response",se=T)
+```
+
+Graph The Data
+
+Below is the code and plot associated with predicted fit and standard error bands. Observed wage values greater than 250K are shown as gray marks at the top of the plot while observations of wage values less than 250K are shown as gray marks at the bottom of the plot.
 
 ```{R}
 plot(age,I(wage>250),xlim=agelims,type="n",ylim=c(0,.2))
 points(jitter(age), I((wage>250)/5),cex=.5,pch="|",col="darkgrey")
 lines(age.grid,pfit,lwd=2, col="blue")
-matlines(age.grid,se.bands,lwd=1,col="blue",lty=3)
+matlines(age.grid,se.bands,lwd=1,col="red",lty=3)
 ```
+
+Jitter() function is used so age observations with the same value do not cover each other.
+This plot is sometimes referred to as a rug plot.
+
+Step Function
+
+In this exercise we utilize the cut function to break the age variable into 4 segments and then build a linear model according to the segments.
 
 ```{R}
 table(cut(age,4))
 fit=lm(wage~cut(age,4),data=Wage)
 coef(summary(fit))
 ```
+
+The function cut() returns an ordered categorical variable; the lm() function then creates a set of dummy variables for use in the regression. The age<33.5 category is left out, so the intercept coefficient of $94,160 can be interpreted as the average salary for those under 33.5 years of age, and the other coefficients can be interpreted as the average additional salary for those in the other age groups.
