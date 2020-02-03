@@ -4,7 +4,7 @@ author: "Cody Clark"
 date: "1/29/2020"
 output: html_document
 ---
-#Lab 6.8.1 Overview
+#Lab 7.8.1 Overview
 
 ###Objectives
 1) Explore non-linear models as a more practical way of solving real-world problems
