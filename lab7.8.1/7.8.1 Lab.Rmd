@@ -4,9 +4,25 @@ author: "Cody Clark"
 date: "1/29/2020"
 output: html_document
 ---
+#Lab 6.8.1 Overview
+
+###Objectives
+1) Explore non-linear models as a more practical way of solving real-world problems
+2) Gain exposure to polynomial regression and step-functions
+3) Explore the `Wage` dataset and within it, the relationship between `age` and `wage`
+
+###Dataset
+
+The `Wage` dataset contains real wage and other data for a group of 3000 male workers in the Mid-Atlantic region in from 2003-2009. Here we will be exploring `age` as our X and `wage` as our Y.
 
 ```{R}
 library(ISLR)
+summary(Wage)
+```
+
+
+
+```{R}
 attach(Wage)
 fit=lm(wage∼poly(age ,4) ,data=Wage)
 coef(summary (fit))
