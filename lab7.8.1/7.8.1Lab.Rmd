@@ -121,7 +121,7 @@ Utilize the predict function to make predictions of the polynomial logistic regr
 preds=predict(fit,newdata=list(age=age.grid),se=T)
 ```
 
-Calculating confience intervals and standard error bands. Since the computations are logit we will need to apply inverse logit mapping.
+Calculating confidence intervals and standard error bands. Since the computations are logit we will need to apply inverse logit mapping.
 
 ```{R}
 pfit = exp(preds$fit) / (1+exp(preds$fit))
