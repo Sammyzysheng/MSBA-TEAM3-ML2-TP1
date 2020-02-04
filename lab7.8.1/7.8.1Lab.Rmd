@@ -20,6 +20,7 @@ library(ISLR)
 summary(Wage)
 ```
 
+First, we fit the model using the lm() function, the poly() command just allows us to avoid a long formula with powers of age. The function returns an orthogonal polynomials, which is a linear combination of the variable.
 
 
 ```{R}
@@ -28,24 +29,27 @@ fit=lm(wage∼poly(age ,4) ,data=Wage)
 coef(summary (fit))
 ```
 
-
+We can also use poly() tp obtain variables directly by using raw=TRUE, and it does affects the coefficient, but not the fitted values.
 
 ```{R}
 fit2=lm(wage∼poly(age ,4,raw=T),data=Wage)
 coef(summary(fit2))
 ```
 
-
+There are other ways to fit the model. one way to do is that by using the wrapper function I() to protect terms like age^2
 
 ```{R}
 fit2a=lm(wage∼age+I(age^2)+I(age^3)+I(age^4),data=Wage)
 coef(fit2a)
 ```
+We can also use cbind() function for building a matrix from a collection of vectors.
 
 ```{R}
 fit2b=lm(wage∼cbind(age ,age^2,age^3, age ^4),data=Wage)
 coef(fit2b)
 ```
+
+Now we make a plot of that and along with standard errors. The dotted lines are the data points, while the blue line is the degree 4 polynomial fit to the Age data. We can see the points in this graph; the shape of the blue line tells us the relationship between age and Wage -  it seems to increase from beginning (20-40), leveling between 30 and 60, then decreasing after 60.
 
 ```{R}
 agelims=range(age)
@@ -53,7 +57,6 @@ age.grid=seq(from=agelims[1],to=agelims[2])
 preds=predict(fit,newdata=list(age=age.grid),se=TRUE)
 se.bands=cbind(preds$fit+2*preds$se.fit,preds$fit-2*preds$se.fit)
 ```
-
 ``` {R}
 par(mfrow=c(1,1),mar=c(4.5,4.5,1,1),oma=c(0,0,4,0))
 plot(age,wage,xlim=agelims,cex=.5,col="darkgrey")
@@ -61,6 +64,7 @@ title("Degree-4 Polynomial",outer=T)
 lines(age.grid,preds$fit,lwd=2,col="blue")
 matlines(age.grid,se.bands,lwd=1,col="blue",lty=3)
 ```
+Whether or not an orthogonal set of basis function is produced by the poly() function will not affect the model. The fitted values are identical.
 
 ```{R}
 preds2=predict(fit2,newdata=list(age=age.grid),se=TRUE)
