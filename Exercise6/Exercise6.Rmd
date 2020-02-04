@@ -1,6 +1,6 @@
 ---
 title: "Exercise6"
-author: "Zhongyi"
+author: "Zhongyi Sheng"
 
 output: html_document
 ---
@@ -46,7 +46,7 @@ deg.min <- which.min(cv.errs)
 points(deg.min, cv.errs[deg.min], col = 'red', cex = 2, pch = 19)
 ```
 
-The minimum of CV MSE at the degree 9. But test MSE of degree 4 is small enough.
+The minimum of CV MSE at the degree 9. But CV MSE of degree 4 is small enough.
 The comparison by ANOVA (`anova(fit.1,fit.2,fit.3,fit.4,fit.5)`, on page 290, section 7.8.1) suggests degree 4 is enough.
 
 ```{r}
