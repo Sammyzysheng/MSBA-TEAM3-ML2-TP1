@@ -130,7 +130,7 @@ se.bands = exp(se.bands.logit)/(1+exp(se.bands.logit))
 tail(se.bands)
 ```
 
-This is an example of a type="response" prediction should be set up, however, it is yielding negative probabilities and should not be used!
+This is an example of how a type="response" prediction should be set up, however, it is yielding negative probabilities and should not be used!
 
 ```{R}
 pred.p=predict(fit,newdata=list(age=age.grid),type="response",se=T)
