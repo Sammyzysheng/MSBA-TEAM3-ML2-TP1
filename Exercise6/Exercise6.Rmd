@@ -4,7 +4,6 @@ author: "Zhongyi"
 
 output: html_document
 ---
-# Question 6
 
 In this exercise, you will further analyze the *Wage* data set considered throughout this chapter.
 
