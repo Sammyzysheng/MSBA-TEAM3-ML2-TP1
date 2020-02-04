@@ -1,9 +1,7 @@
 ---
-title: "Team 3 Presentation"
-author: "Cody Clark"
-date: "1/29/2020"
 output: html_document
 ---
+
 #Lab 7.8.1 Overview
 
 ###Objectives
