@@ -2,14 +2,14 @@
 output: html_document
 ---
 
-#Lab 7.8.1 Overview
+# Lab 7.8.1 Overview
 
-###Objectives
+### Objectives
 1) Explore non-linear models as a more practical way of solving real-world problems
 2) Gain exposure to polynomial regression and step-functions
 3) Explore the `Wage` dataset and within it, the relationship between `age` and `wage`
 
-###Dataset
+### Dataset
 
 The `Wage` dataset contains real wage and other data for a group of 3000 male workers in the Mid-Atlantic region in from 2003-2009. Here we will be exploring `age` as our X and `wage` as our Y.
 
@@ -69,7 +69,7 @@ preds2=predict(fit2,newdata=list(age=age.grid),se=TRUE)
 max(abs(preds$fit-preds2$fit))
 ```
 
-##Choosing a "Best" Model
+## Choosing a "Best" Model
 
 First, we must decide what degree polynomial to use. Hypothesis testing is one way to do this. We use the anova() function to compare the five models and test for the following hypotheses:
 
