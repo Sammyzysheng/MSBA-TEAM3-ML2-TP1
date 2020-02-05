@@ -1,5 +1,4 @@
-## Team 3
-## Cody Clark, Nate Atkins, Frank Guo, Zhongyi Sheng
+## Team 3: Cody Clark, Nate Atkins, Frank Guo, Zhongyi Sheng
 
 
 # Lab 7.8.1 and Applied Exercise 6
