@@ -63,7 +63,7 @@ anova(fit.1, fit.2, fit.3, fit.4, fit.5)
 
 ```
 
-Predict with 4 and 8 degree model:
+Predict with 4 and 9 degree model:
 
 ```{r}
 plot(wage ~ age, data = Wage, col = "darkgrey")
@@ -71,7 +71,7 @@ age.range <- range(Wage$age)
 age.grid <- seq(from = age.range[1], to = age.range[2])
 fit1 <- lm(wage ~ poly(age, 4), data = Wage)
 preds1 <- predict(fit1, newdata = list(age = age.grid))
-fit2 <- lm(wage ~ poly(age,8), data = Wage)
+fit2 <- lm(wage ~ poly(age,9), data = Wage)
 preds2 <- predict(fit2, newdata = list(age = age.grid))
 lines(age.grid, preds1, col = "red", lwd = 2)
 lines(age.grid, preds2, col = "blue", lwd = 2)
