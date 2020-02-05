@@ -1,6 +1,6 @@
 ---
 title: "lab 7.8.1 Overview"
-author: "Xiaobai Guo, Nate Atkins, Cody Clark"
+author: "Zhongyi Sheng Frank Guo, Nate Atkins, Cody Clark"
 
 output: html_document
 ---
@@ -49,7 +49,7 @@ fit2b=lm(wage~cbind(age ,age^2,age^3, age ^4),data=Wage)
 coef(fit2b)
 ```
 
-Now we make a plot of that and along with standard errors. The dotted lines are the data points, while the blue line is the degree 4 polynomial fit to the `Age` data. We can see the points in this graph; the shape of the blue line tells us the relationship between `age` and `Wage` -  it seems to increase from beginning (20-40), leveling between 30 and 60, then decreasing after 60.
+Now we make a plot of that and along with standard errors. The dotted lines are the confidence bands, which is the upper and lower confidence bounds for all points on a fitted line within the range of data. While the blue line is the degree 4 polynomial fit to the `Age` data. We can see the points in this plot; the shape of the blue line tells us the relationship between `age` and `Wage` -  it seems to increase from beginning (age of 20-40), leveling between age of 40 and age of 60, then it decreases after age of 60.
 
 ```{R}
 agelims=range(age)
