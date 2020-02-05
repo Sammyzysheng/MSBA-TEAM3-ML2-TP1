@@ -4,7 +4,7 @@
 
 ## Lab 7.8.1 and Applied Exercise 6
 
-- [Lab 7.8.1](https://sammyzysheng.github.io/MSBA-TEAM3-ML2-TP1/Lab7.8.1/) 
+- [Lab 7.8.1](https://sammyzysheng.github.io/MSBA-TEAM3-ML2-TP1/lab7.8.1/) 
 - [Exercise 6](https://sammyzysheng.github.io/MSBA-TEAM3-ML2-TP1/Exercise6/) 
 
 
